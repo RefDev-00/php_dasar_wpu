@@ -1,3 +1,17 @@
+<?php
+// Cek apakah tidak ada data di $_GET
+
+if (
+    !isset($_GET["Nama"]) ||
+    !isset($_GET["Nim"]) ||
+    !isset($_GET["nama"])
+) {
+    // redirect
+    header("Location: detail_get.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

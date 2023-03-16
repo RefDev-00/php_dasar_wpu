@@ -34,7 +34,7 @@
     <?php
     foreach ($students as $student) : ?>
         <ul>
-            <a href="$detail$_get.php?nama=<?php echo $student["Nama"]; ?>
+            <a href="detail_get.php?nama=<?php echo $student["Nama"]; ?>
             &nim=<?php echo $student["Nim"]; ?>
             &jurusan=<?php echo $student["Jurusan"]; ?>">
                 <li><?php echo $student["Nama"]; ?></li>
