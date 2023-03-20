@@ -1,3 +1,12 @@
+<?php
+// koneksi ke database melalui file connect
+require "connect.php";
+
+// query function
+$mahasiswa = query('SELECT * FROM mahasiswa');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +29,25 @@
       <th>Gambar</th>
       <th>Aksi</th>
     </tr>
+    
+    <?php
+    $number = 1;
+    ?>
+    <?php foreach($mahasiswa as $row) : ?>
+      <tr>
+        <td><?php echo $number; ?></td>
+        <td><?php echo $row["nama"]; ?></td>
+        <td><?php echo $row["nrp"]; ?></td>
+        <td><?php echo $row["email"]; ?></td>
+        <td><?php echo $row["jurusan"]; ?></td>
+        <td><img src="img/<?php echo $row["gambar"]; ?>" alt="refsi" width="50px"></td>
+        <td>
+          <a href="#">Ubah</a>
+          <a href="#">Hapus</a>
+        </td>
+      </tr>
+      <?php $number++; ?>
+    <?php endforeach; ?>
   </table>
 </body>
 
