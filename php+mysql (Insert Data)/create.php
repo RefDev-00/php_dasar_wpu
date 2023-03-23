@@ -4,21 +4,20 @@ require "connect.php";
 // cek apakah tombol submit sudah ditekan atau belum
 
 if (isset($_POST["submit"])) {
-    // Ambil data dari tiap element dalam form
-    $nrp = $_POST['nrp'];
-    $nama = $_POST["nama"];
-    $email = $_POST['email'];
-    $jurusan = $_POST['jurusan'];
-    $gambar = $_POST['gambar'];
-
-    // query insert data
-    $query = "INSERT INTO mahasiswa
-     VALUES
-     ('','$nrp','$nama','$email','$jurusan','$gambar')";
-    mysqli_query($db_connect, $query);
-    
     // cek apakah data berhasil di tambahkan atau tidak 
-    var_dump(mysqli_affected_rows($db_connect));
+    if (tambah($_POST) > 0) {
+        echo "
+        <script>
+        alert('Data Berhasil Disimpan!');
+        document.location.href = 'index.php';
+        </script>
+        ";
+    } else {
+        echo "<script>
+        alert('Data Gagal Disimpan!');
+        document.location.href = 'index.php';
+        </script>";
+    }
 }
 
 ?>
@@ -31,37 +30,70 @@ if (isset($_POST["submit"])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data Mahasiswa</title>
+    <!-- link CSS Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link JS Boostsrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1>Input Data Mahasiswa</h1>
-    <form action="" method="post">
-        <ul>
-            <li>
-                <label for="nrp">Nrp :</label>
-                <input type="text" id="nrp" name="nrp">
-            </li>
-            <li>
-                <label for="nama">Nama :</label>
-                <input type="text" id="nama" name="nama">
-            </li>
-            <li>
-                <label for="email">Email :</label>
-                <input type="text" id="email" name="email">
-            </li>
-            <li>
-                <label for="jurusan">Jurusan :</label>
-                <input type="text" id="jurusan" name="jurusan">
-            </li>
-            <li>
-                <label for="gambar">Gambar :</label>
-                <input type="text" id="gambar" name="gambar">
-            </li>
-            <li>
-                <button type="submit" name="submit">Save Data</button>
-            </li>
-        </ul>
-    </form>
+    <div class="container">
+        <h2 style="text-align: center; margin-top: 20px;">Input Data Mahasiswa</h2>
+
+        <form action="" method="post">
+            <div>
+                <label for="nama" class="form-label">Nama :</label>
+                <input type="text" class="form-control" name="nama" id="nama" required>
+            </div>
+            <div>
+                <label for="nrp" class="form-label">Nrp :</label>
+                <input type="text" class="form-control" name="nrp" id="nrp" required>
+            </div>
+            <div>
+                <label for="email" class="form-label">Email :</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
+            <div>
+                <label for="jurusan" class="form-label">Jurusan :</label>
+                <input type="text" class="form-control" name="jurusan" id="jurusan" required>
+            </div>
+            <div class="mb-3">
+                <label for="gambar" class="form-label">Gambar :</label>
+                <input type="text" class="form-control" name="gambar" id="gambar" required>
+            </div>
+
+            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+        </form>
+
+        <!-- <form action="" method="post">
+            <ul>
+                <li>
+                    <label for="nama">Nama :</label>
+                    <input type="text" id="nama" name="nama" required>
+                </li>
+                <li>
+                    <label for="nrp">Nrp :</label>
+                    <input type="text" id="nrp" name="nrp" required>
+                </li>
+                <li>
+                    <label for="email">Email :</label>
+                    <input type="text" id="email" name="email" required>
+                </li>
+                <li>
+                    <label for="jurusan">Jurusan :</label>
+                    <input type="text" id="jurusan" name="jurusan" required>
+                </li>
+                <li>
+                    <label for="gambar">Gambar :</label>
+                    <input type="text" id="gambar" name="gambar" required>
+                </li>
+                <li>
+                    <button type="submit" name="submit">Save Data</button>
+                </li>
+            </ul>
+        </form> -->
+    </div>
 </body>
 
 </html>
