@@ -51,7 +51,7 @@ $mahasiswa = query('SELECT * FROM mahasiswa');
                     <td><?php echo $row["jurusan"]; ?></td>
                     <td><img src="img/<?php echo $row["gambar"]; ?>" alt="refsi" width="50px"></td>
                     <td>
-                        <a href="#">Ubah</a>
+                        <a href="edit.php?id=<?= $row["id"]; ?>">Ubah</a>
                         <a href="delete.php?id=<?= $row["id"]; ?>" onclick="return confirm('Apakah yakin ingin dihapus?')">Hapus</a>
                     </td>
                 </tr>

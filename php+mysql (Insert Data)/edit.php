@@ -1,20 +1,25 @@
 <?php
 // koneksi ke DBMS
 require "connect.php";
-// cek apakah tombol submit sudah ditekan atau belum
 
+// ambil id di URL
+$id = $_GET["id"];
+
+// Query data mahasiswa berdasarkan id
+$mhs = query("SELECT * FROM mahasiswa WHERE id = $id")[0];
+// cek apakah tombol submit sudah ditekan atau belum
 if (isset($_POST["submit"])) {
-    // cek apakah data berhasil di tambahkan atau tidak 
-    if (tambah($_POST) > 0) {
+    // cek apakah data berhasil di edit atau tidak 
+    if (edit($_POST) > 0) {
         echo "
         <script>
-        alert('Data Berhasil Disimpan!');
+        alert('Data Berhasil Diupdate!');
         document.location.href = 'index.php';
         </script>
         ";
     } else {
         echo "<script>
-        alert('Data Gagal Disimpan!');
+        alert('Data Gagal Diupdate!');
         document.location.href = 'index.php';
         </script>";
     }
@@ -29,7 +34,7 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Mahasiswa</title>
+    <title>Edit Data Mahasiswa</title>
     <!-- link CSS Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -39,31 +44,32 @@ if (isset($_POST["submit"])) {
 
 <body>
     <div class="container">
-        <h2 style="text-align: center; margin-top: 20px;">Input Data Mahasiswa</h2>
+        <h2 style="text-align: center; margin-top: 20px;">Edit Data Mahasiswa</h2>
 
         <form action="" method="post">
+            <input type="hidden" name="id" value="<?= $mhs["id"]; ?>">
             <div>
                 <label for="nama" class="form-label">Nama :</label>
-                <input type="text" class="form-control" name="nama" id="nama" required>
+                <input type="text" class="form-control" name="nama" id="nama" value="<?= $mhs["nama"];?>" required>
             </div>
             <div>
                 <label for="nrp" class="form-label">Nrp :</label>
-                <input type="text" class="form-control" name="nrp" id="nrp" required>
+                <input type="text" class="form-control" name="nrp" id="nrp" value="<?= $mhs["nrp"];?>" required>
             </div>
             <div>
                 <label for="email" class="form-label">Email :</label>
-                <input type="email" class="form-control" name="email" id="email" required>
+                <input type="email" class="form-control" name="email" id="email" value="<?= $mhs["email"];?>" required>
             </div>
             <div>
                 <label for="jurusan" class="form-label">Jurusan :</label>
-                <input type="text" class="form-control" name="jurusan" id="jurusan" required>
+                <input type="text" class="form-control" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"];?>" required>
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar :</label>
-                <input type="text" class="form-control" name="gambar" id="gambar" required>
+                <input type="text" class="form-control" name="gambar" id="gambar" value="<?= $mhs["gambar"];?>" required>
             </div>
 
-            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" name="submit" class="btn btn-primary">Update</button>
         </form>
     </div>
 </body>
