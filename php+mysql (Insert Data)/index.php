@@ -3,7 +3,12 @@
 require "connect.php";
 
 // query function
-$mahasiswa = query('SELECT * FROM mahasiswa');
+$mahasiswa = query('SELECT * FROM mahasiswa ORDER BY id DESC');
+
+// Ketika tombol cari di tekan
+if(isset($_POST["cari"])){
+    $mahasiswa = cari($_POST["keyword"]);
+}
 
 ?>
 
@@ -27,6 +32,10 @@ $mahasiswa = query('SELECT * FROM mahasiswa');
     <div class="container-sm">
         <h2 style="text-align: center; margin-top: 20px;">Halaman Data Mahasiswa</h2>
         <a href="create.php">Tambah Data</a>
+        <form action="" method="post">
+            <input type="text" name="keyword" size="30" autofocus placeholder="Masukkan Pencarian..." autocomplete="off">
+            <button type="submi" name="cari">Cari</button>
+        </form>
         <br></br>
         <table class="table table-striped">
             <tr>
