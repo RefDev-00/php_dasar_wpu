@@ -41,7 +41,7 @@ if (isset($_POST["submit"])) {
     <div class="container">
         <h2 style="text-align: center; margin-top: 20px;">Input Data Mahasiswa</h2>
 
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div>
                 <label for="nama" class="form-label">Nama :</label>
                 <input type="text" class="form-control" name="nama" id="nama" required>
@@ -60,7 +60,7 @@ if (isset($_POST["submit"])) {
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar :</label>
-                <input type="text" class="form-control" name="gambar" id="gambar" required>
+                <input type="file" class="form-control" name="gambar" id="gambar" required>
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">Simpan</button>

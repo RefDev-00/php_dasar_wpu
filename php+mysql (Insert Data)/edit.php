@@ -46,27 +46,29 @@ if (isset($_POST["submit"])) {
     <div class="container">
         <h2 style="text-align: center; margin-top: 20px;">Edit Data Mahasiswa</h2>
 
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?= $mhs["id"]; ?>">
+            <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"]; ?>">
             <div>
                 <label for="nama" class="form-label">Nama :</label>
-                <input type="text" class="form-control" name="nama" id="nama" value="<?= $mhs["nama"];?>" required>
+                <input type="text" class="form-control" name="nama" id="nama" value="<?= $mhs["nama"]; ?>" required>
             </div>
             <div>
                 <label for="nrp" class="form-label">Nrp :</label>
-                <input type="text" class="form-control" name="nrp" id="nrp" value="<?= $mhs["nrp"];?>" required>
+                <input type="text" class="form-control" name="nrp" id="nrp" value="<?= $mhs["nrp"]; ?>" required>
             </div>
             <div>
                 <label for="email" class="form-label">Email :</label>
-                <input type="email" class="form-control" name="email" id="email" value="<?= $mhs["email"];?>" required>
+                <input type="email" class="form-control" name="email" id="email" value="<?= $mhs["email"]; ?>" required>
             </div>
             <div>
                 <label for="jurusan" class="form-label">Jurusan :</label>
-                <input type="text" class="form-control" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"];?>" required>
+                <input type="text" class="form-control" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"]; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar :</label>
-                <input type="text" class="form-control" name="gambar" id="gambar" value="<?= $mhs["gambar"];?>" required>
+                <img src="img/<?php echo $mhs["gambar"]; ?>" alt="" style="width: 50px;, height: 50px;">
+                <input type="file" class="form-control" name="gambar" id="gambar" required>
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">Update</button>
