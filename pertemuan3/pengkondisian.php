@@ -1,40 +1,22 @@
-<?php
-// Pengkondisian / Percabangan
-// if else
-// if else if else
-// ternary
-// switch
+<!DOCTYPE html>
+<html lang="en">
 
-$i = 10;
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 
-if ($i == 20) {
-  echo "Benar";
-} else if ($i == 10) {
-  echo "Sama Banget";
-} else {
-  echo "Salah";
-}
+<body>
+  <script>
+  </script>
+  <form action="">
+    <label for="">Nama</label>
+    <input type="text">
+    <label for="">Riwayat Penyakit</label>
+    <input type="text">
+  </form>
+</body>
 
-echo (($i < 20) ? "<br>Benar" : "<br>Salah");
-
-
-// Switch Case
-$color = "red";
-switch ($color) {
-  case 'red':
-    echo "<br> Color is Red";
-    break;
-  case 'yellow':
-    echo "<br> Color is Yellow";
-    break;
-  case 'green':
-    echo "<br> Color is Green";
-    break;
-  case 'blur':
-    echo "<br> Color is Blue";
-    break;
-
-  default:
-    echo "<br> No Color";
-    break;
-}
+</html>

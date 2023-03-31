@@ -18,6 +18,7 @@ function query($query)
 function tambah($data)
 {
     global $db_connect;
+
     // Ambil data dari tiap element dalam form
     $nama = htmlspecialchars($data["nama"]);
     $nrp = htmlspecialchars($data['nrp']);
@@ -142,4 +143,45 @@ function cari($keyword)
                 ";
 
     return query($query);
+}
+
+function registrasi($data)
+{
+    global $db_connect;
+
+    $username = strtolower(stripslashes($data["username"]));
+    $password = mysqli_real_escape_string($db_connect, $data["password"]);
+    $passwordCheck = mysqli_real_escape_string($db_connect, $data["passwordCheck"]);
+
+
+    // cek username duplicate
+    $duplicateUsername = mysqli_query($db_connect, "SELECT username FROM user WHERE username = '$username'");
+    if (mysqli_fetch_assoc($duplicateUsername)) {
+        echo "<script> 
+        alert('Username already exist');
+        </script>";
+
+        return false;
+    }
+
+    // cek konfirmasi password
+    if ($password !== $passwordCheck) {
+        echo "<script>
+            alert('Konfirmasi password tidak sesuai');
+        </script>";
+
+        return false;
+    }
+
+    //enkripsi Password
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+
+    // Tambahkan userbaru ke database
+    $query = "INSERT INTO user
+     VALUES
+     ('','$username','$password')";
+    mysqli_query($db_connect, $query);
+
+    return mysqli_affected_rows($db_connect);
 }
