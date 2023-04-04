@@ -9,8 +9,17 @@ if (!isset($_SESSION["login"])) {
 // koneksi ke database melalui file connect
 require "connect.php";
 
+
+// pagination
+// konfigurasi
+$jumlahDataPerHalaman = 2;
+$jumlahData = count(query("SELECT * FROM mahasiswa"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+$halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
+
 // query function
-$mahasiswa = query('SELECT * FROM mahasiswa ORDER BY id DESC');
+$mahasiswa = query("SELECT * FROM mahasiswa ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 // Ketika tombol cari di tekan
 if (isset($_POST["cari"])) {
@@ -26,7 +35,7 @@ if (isset($_POST["cari"])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Website Mahasiswa</title>
+    <title>Data Entry</title>
 
     <!-- link CSS Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -38,13 +47,13 @@ if (isset($_POST["cari"])) {
 <body>
     <a href="logout.php">Logout</a>
     <div class="container-sm">
-        <h2 style="text-align: center; margin-top: 20px;">Halaman Data Mahasiswa</h2>
+        <h2 style="text-align: center; margin-top: 20px;">Entry Data</h2>
         <a href="create.php">Tambah Data</a>
         <form action="" method="post">
             <input type="text" name="keyword" size="30" autofocus placeholder="Masukkan Pencarian..." autocomplete="off">
             <button type="submi" name="cari">Cari</button>
         </form>
-        <br></br>
+
         <table class="table table-striped">
             <tr>
                 <th>No</th>
@@ -61,7 +70,7 @@ if (isset($_POST["cari"])) {
             ?>
             <?php foreach ($mahasiswa as $row) : ?>
                 <tr>
-                    <td><?php echo $number; ?></td>
+                    <td><?php echo $number + $awalData; ?></td>
                     <td><?php echo $row["nama"]; ?></td>
                     <td><?php echo $row["nrp"]; ?></td>
                     <td><?php echo $row["email"]; ?></td>
@@ -75,6 +84,26 @@ if (isset($_POST["cari"])) {
                 <?php $number++; ?>
             <?php endforeach; ?>
         </table>
+
+
+        <!-- Button Navigasi -->
+        <?php if ($halamanAktif > 1) : ?>
+            <a href="?page= <?= $halamanAktif - 1 ?>">&laquo;</a>
+        <?php endif; ?>
+
+
+        <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+            <?php if ($i == $halamanAktif) : ?>
+                <b><a href="?page= <?php echo $i; ?>"><?php echo $i; ?></a></b>
+            <?php else : ?>
+                <a href="?page= <?php echo $i; ?>"><?php echo $i; ?></a>
+            <?php endif; ?>
+        <?php endfor; ?>
+
+        <?php if ($halamanAktif < $jumlahHalaman) : ?>
+            <a href="?page= <?= $halamanAktif + 1 ?>">&raquo;</a>
+        <?php endif; ?>
+        <br></br>
     </div>
 </body>
 
