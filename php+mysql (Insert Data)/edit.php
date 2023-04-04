@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
 // koneksi ke DBMS
 require "connect.php";
 
@@ -51,24 +57,24 @@ if (isset($_POST["submit"])) {
             <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"]; ?>">
             <div>
                 <label for="nama" class="form-label">Nama :</label>
-                <input type="text" class="form-control" name="nama" id="nama" value="<?= $mhs["nama"]; ?>" required>
+                <input type="text" class="form-control" name="nama" id="nama" value="<?= $mhs["nama"]; ?>">
             </div>
             <div>
                 <label for="nrp" class="form-label">Nrp :</label>
-                <input type="text" class="form-control" name="nrp" id="nrp" value="<?= $mhs["nrp"]; ?>" required>
+                <input type="text" class="form-control" name="nrp" id="nrp" value="<?= $mhs["nrp"]; ?>">
             </div>
             <div>
                 <label for="email" class="form-label">Email :</label>
-                <input type="email" class="form-control" name="email" id="email" value="<?= $mhs["email"]; ?>" required>
+                <input type="email" class="form-control" name="email" id="email" value="<?= $mhs["email"]; ?>">
             </div>
             <div>
                 <label for="jurusan" class="form-label">Jurusan :</label>
-                <input type="text" class="form-control" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"]; ?>" required>
+                <input type="text" class="form-control" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"]; ?>">
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar :</label>
                 <img src="img/<?php echo $mhs["gambar"]; ?>" alt="" style="width: 50px;, height: 50px;">
-                <input type="file" class="form-control" name="gambar" id="gambar" required>
+                <input type="file" class="form-control" name="gambar" id="gambar">
             </div>
 
             <button type="submit" name="submit" class="btn btn-primary">Update</button>

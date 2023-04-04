@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
+}
+
 // koneksi ke database melalui file connect
 require "connect.php";
 
@@ -6,7 +13,7 @@ require "connect.php";
 $mahasiswa = query('SELECT * FROM mahasiswa ORDER BY id DESC');
 
 // Ketika tombol cari di tekan
-if(isset($_POST["cari"])){
+if (isset($_POST["cari"])) {
     $mahasiswa = cari($_POST["keyword"]);
 }
 
@@ -29,6 +36,7 @@ if(isset($_POST["cari"])){
 </head>
 
 <body>
+    <a href="logout.php">Logout</a>
     <div class="container-sm">
         <h2 style="text-align: center; margin-top: 20px;">Halaman Data Mahasiswa</h2>
         <a href="create.php">Tambah Data</a>

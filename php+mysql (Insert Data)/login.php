@@ -1,5 +1,28 @@
 <?php
+
+session_start();
 require 'connect.php';
+
+// cek cookie
+if (isset($_COOKIE['login']) && isset($_COOKIE['key'])) {
+    $id = $_COOKIE['id'];
+    $key = $_COOKIE['key'];
+
+    // ambil username berdasarkan id
+    $result = mysqli_query($db_connect, "SELECT username FROM user WHERE
+    id = $id");
+    $row = mysqli_fetch_assoc($result);
+
+    // cek cookie dan username
+    if ($key === hash('sha256', $row['username'])) {
+        $_SESSION['login'] = true;
+    }
+}
+
+if (isset($_SESSION["login"])) {
+    header("Location: index.php");
+}
+
 
 if (isset($_POST["login"])) {
     $username = $_POST["username"];
@@ -14,6 +37,17 @@ if (isset($_POST["login"])) {
         // cek password 
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
+
+            // set session login
+            $_SESSION["login"] = true;
+
+            // cek remember me
+            if (isset($_POST['remember'])) {
+                // buat cookie  
+                setcookie('id', $row['id'], time() + 60);
+                setcookie('key', hash('sha256', $row['username']), time() + 60);
+            }
+
             header("Location: index.php");
             exit;
         }
@@ -40,10 +74,10 @@ if (isset($_POST["login"])) {
 
 <body>
     <div class="container">
-        <h2 style="text-align: center; margin-top: 20px;">Halaman Registrasi</h2>
+        <h2 style="text-align: center; margin-top: 20px;">Halaman Login</h2>
 
         <?php if (isset($error)) : ?>
-            <p style="color: red; font-style: italic;">Password Salah</p>
+            <p style="color: red; font-style: italic;">Usernama/Password Salah</p>
         <?php endif; ?>
 
         <form action="" method="post">
@@ -55,6 +89,11 @@ if (isset($_POST["login"])) {
             <div class="mb-3">
                 <label for="password" class="form-label">Password :</label>
                 <input type="password" class="form-control" name="password" id="password">
+            </div>
+
+            <div class="mb-3">
+                <input type="checkbox" name="remember" id="remember">
+                <label for="remember" class="form-label">Remember me :</label>
             </div>
 
             <button type="submit" name="login" class="btn btn-primary">Login</button>
